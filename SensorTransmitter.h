@@ -102,6 +102,7 @@ class ThermoHygroTransmitter : public SensorTransmitter {
 		 * @param humidty Humidity in percentage-points REL. Thus, for 34% REH humidity should be 34.
 		 */
 		void sendTempHumi(int temperature, byte humidity);
+		void sendRainlevel(unsigned int level); // in 0.7mm
 	
 	private:
 		byte _channel; // Note: internally, the channels for the thermo/hygro-sensor are mapped as follow:
