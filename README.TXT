@@ -44,6 +44,10 @@ Default installation receiver & demo:
 
 
 Changelog:
+RemoteSensor library v1.0.3 (20240204) for Arduino
+ - Fix SensorTransmitter::sendPackage
+ - Add ThermoHygroTransmitter::sendRainlevel
+
 RemoteSensor library v1.0.2 (20130601) for Arduino 1.0
  - Reduced memory usage (Flash, RAM). Because of this, a small backwards
    incompatibility is introduced: The last parameter of
