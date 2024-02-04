@@ -1,10 +1,9 @@
-RemoteSensor library v1.0.1 (20120213) for Arduino 1.0
-Made by Randy Simons http://randysimons.nl/
+RemoteSensor library for Arduino.
+Made by Randy Simons.
 
 This library provides an easy class for Arduino, to send and receive signals
 used by some common weather stations using remote 433MHz sensors, like those
 made by Cresta.
-E.g. http://www.cresta.nl/index.php?Itemid=2&option=com_zoo&view=item&category_id=32&item_id=281&lang=en
 
 Cresta is just a brandname. The original OEM seems to be Hideki Electronics.
 There are other brands which use the same hardware and / or protocol. As far
@@ -15,8 +14,6 @@ This software is based on the work of Oopsje. See docs/CrestaProtocol.pdf
 See SensorTransmitter.h and SensorReciver.h for details!
 
 License: GPLv3. See ./RemoteSensor/license.txt
-
-Latest source and wiki: https://bitbucket.org/fuzzillogic/433mhzforarduino
 
 
 Installation of library:
