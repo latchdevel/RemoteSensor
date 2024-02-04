@@ -115,10 +115,10 @@ void SensorTransmitter::sendManchesterPackage(byte transmitterPin, byte *data, b
  */
 void SensorTransmitter::sendPackage(byte transmitterPin, byte *data) {
 	byte buffer[14], temp, count;
-	for (temp=0x5e; temp>0x40; temp+=0x40) { /* Sends 3 packages */
+	for (temp=0x40; temp>=0x40; temp+=0x40) { /* Sends 3 packages */
 		memcpy(buffer, data,  ((data[2] >> 1) & 0x1f) + 1);
 
-		buffer[3] = temp;   
+		buffer[3] = (buffer[3] & 0x1f) + temp;   
 
 		count = encryptAndAddCheck(buffer); /* Encrypt, add checksum bytes */
 		sendManchesterPackage(transmitterPin, buffer,count);  /* Send the package */
@@ -144,6 +144,7 @@ void ThermoHygroTransmitter::sendTempHumi(int temperature, byte humidity) {
 	buffer[0] = 0x75; 		/* Header byte */
 	buffer[1] = (_channel << 5) | _randomId ;  /* Thermo-hygro at channel 1 (see table1)*/
 	buffer[2] = 0xce;		/* Package size byte for th-sensor */
+	buffer[3] = 0x1e; 		/* Themo/Hygro */
 	
 	if ( temperature < 0 ) {
 		buffer[5] = 0x4 << 4;		// High nibble is 0x4 for sub zero temperatures...
@@ -164,3 +165,19 @@ void ThermoHygroTransmitter::sendTempHumi(int temperature, byte humidity) {
 	sendPackage(_transmitterPin, buffer);
 }
 
+void ThermoHygroTransmitter::sendRainlevel(unsigned int level){ // in 0.7mm
+	byte buffer[10];
+	
+	// Note: temperature is 10x the actual temperature! So, 23.5 degrees is passed as 235.
+	
+	buffer[0] = 0x75; 		/* Header byte */
+	buffer[1] = (_channel << 5) | _randomId ;  /* Thermo-hygro at channel 1 (see table1)*/
+	buffer[2] = 0xcc;		/* Package size byte for rain-sensor */
+	buffer[3] = 0x0e; 		/* Rain level */
+	
+	// Note: temperature is now always positive!
+	buffer[4] = level & 0xff;						// Low byte
+	buffer[5] = (level >>8) & 0xff;					// High byte
+	
+	sendPackage(_transmitterPin, buffer);
+}
